@@ -1,0 +1,23 @@
+name: MSBuild
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Pack
+      run |
+      vcpkg install ffmpeg:x64-windows-static
+      vcpkg export ffmpeg:x264-windows-static --zip
+      
+     - uses: actions/upload-artifact@v2
+       with:
+       name: Upload
+       path: C:/vcpkg/*.zip
+      
